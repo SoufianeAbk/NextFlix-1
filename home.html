@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inception - NextFlix</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #e50914;
+            --dark-bg: #141414;
+            --dark-secondary: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #b3b3b3;
+            --hover-bg: #2a2a2a;
+            --success-color: #46d369;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 100%);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Hero Banner */
+        .hero-banner {
+            margin-top: 80px;
+            height: 60vh;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), var(--dark-bg)), 
+                        url('https://via.placeholder.com/1920x800/667eea/ffffff?text=Inception+Banner');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: flex-end;
+            padding: 3rem 2rem;
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .film-title-main {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .film-meta {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .rating {
+            background: var(--primary-color);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .year, .duration, .age-rating {
+            color: var(--text-secondary);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #c00711;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        /* Film Details Section */
+        .film-details {
+            background: var(--dark-secondary);
+            padding: 2rem;
+            border-radius: 10px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .plot {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .genres {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .genre-tag {
+            padding: 0.4rem 1rem;
+            background: var(--hover-bg);
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        /* Cast Section */
+        .cast-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .cast-member {
+            text-align: center;
+        }
+
+        .cast-photo {
+            width: 100%;
+            height: 150px;
+            background: var(--hover-bg);
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+            object-fit: cover;
+        }
+
+        .cast-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .cast-role {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .info-box {
+            background: var(--dark-secondary);
+            padding: 1.5rem;
+            border-radius: 10px;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--hover-bg);
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .info-label {
+            color: var(--text-secondary);
+        }
+
+        .info-value {
+            font-weight: 600;
+        }
+
+        /* Reviews */
+        .reviews {
+            background: var(--dark-secondary);
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 3rem;
+        }
+
+        .review-card {
+            background: var(--hover-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .reviewer-name {
+            font-weight: 600;
+        }
+
+        .review-rating {
+            color: #ffd700;
+        }
+
+        .review-text {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Related Films */
+        .related-films {
+            margin-top: 3rem;
+        }
+
+        .film-scroll {
+            display: flex;
+            gap: 1.5rem;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+        }
+
+        .film-scroll::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .film-scroll::-webkit-scrollbar-track {
+            background: var(--hover-bg);
+            border-radius: 10px;
+        }
+
+        .film-scroll::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 10px;
+        }
+
+        .related-film-card {
+            min-width: 200px;
+            background: var(--dark-secondary);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .related-film-card:hover {
+            transform: scale(1.05);
+        }
+
+        .related-film-card img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+        }
+
+        .related-film-info {
+            padding: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-secondary);
+            padding: 3rem 2rem 1rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            line-height: 2;
+        }
+
+        .footer-section a:hover {
+            color: var(--text-primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #333;
+            color: var(--text-secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .film-title-main {
+                font-size: 2.5rem;
+            }
+
+            .cast-grid {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-banner {
+                height: 50vh;
+            }
+
+            .film-title-main {
+                font-size: 2rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">NEXTFLIX</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#films">Films</a></li>
+                <li><a href="#series">Series</a></li>
+                <li><a href="#nieuw">Nieuw</a></li>
+                <li><a href="#mijnlijst">Mijn Lijst</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero-banner">
+        <div class="hero-content">
+            <h1 class="film-title-main">Inception</h1>
+            <div class="film-meta">
+                <span class="rating">⭐ 8.8/10</span>
+                <span class="year">2010</span>
+                <span class="duration">148 min</span>
+                <span class="age-rating">PG-13</span>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-primary">▶ Afspelen</button>
+                <button class="btn btn-secondary">+ Mijn Lijst</button>
+                <button class="btn btn-secondary">👍 Beoordelen</button>
+            </div>
+        </div>
+    </section>
+
+    <main>
+        <div class="content-grid">
+            <div class="main-content">
+                <section class="film-details">
+                    <h2 class="section-title">Verhaal</h2>
+                    <p class="plot">
+                        Dom Cobb is een getalenteerde dief, de beste in het gevaarlijke spel van extractie: 
+                        het stelen van waardevolle geheimen uit het onderbewustzijn tijdens de droomstaat, 
+                        wanneer de geest op zijn kwetsbaarst is. Cobb's zeldzame vaardigheid heeft hem een 
+                        gewilde speler gemaakt in deze verraderlijke nieuwe wereld van bedrijfsspionage, 
+                        maar het heeft hem ook tot een internationale vluchteling gemaakt en hem alles gekost 
+                        wat hij ooit liefhad. Nu wordt Cobb een kans geboden op verlossing. Een laatste klus 
+                        kan hem zijn leven teruggeven, maar alleen als hij het onmogelijke kan bereiken: inception.
+                    </p>
+
+                    <div class="genres">
+                        <span class="genre-tag">Actie</span>
+                        <span class="genre-tag">Sci-Fi</span>
+                        <span class="genre-tag">Thriller</span>
+                        <span class="genre-tag">Mystery</span>
+                    </div>
+
+                    <h3 class="section-title">Cast</h3>
+                    <div class="cast-grid">
+                        <div class="cast-member">
+                            <img src="https://via.placeholder.com/120x150/667eea/ffffff?text=Leonardo" alt="Leonardo DiCaprio" class="cast-photo">
+                            <div class="cast-name">Leonardo DiCaprio</div>
+                            <div class="cast-role">Dom Cobb</div>
+                        </div>
+                        <div class="cast-member">
+                            <img src="https://via.placeholder.com/120x150/764ba2/ffffff?text=Marion" alt="Marion Cotillard" class="cast-photo">
+                            <div class="cast-name">Marion Cotillard</div>
+                            <div class="cast-role">Mal</div>
+                        </div>
+                        <div class="cast-member">
+                            <img src="https://via.placeholder.com/120x150/38a169/ffffff?text=Tom" alt="Tom Hardy" class="cast-photo">
+                            <div class="cast-name">Tom Hardy</div>
+                            <div class="cast-role">Eames</div>
+                        </div>
+                        <div class="cast-member">
+                            <img src="https://via.placeholder.com/120x150/f4845f/ffffff?text=Ellen" alt="Ellen Page" class="cast-photo">
+                            <div class="cast-name">Elliot Page</div>
+                            <div class="cast-role">Ariadne</div>
+                        </div>
+                        <div class="cast-member">
+                            <img src="https://via.placeholder.com/120x150/e76f51/ffffff?text=Joseph" alt="Joseph Gordon-Levitt" class="cast-photo">
+                            <div class="cast-name">Joseph Gordon-Levitt</div>
+                            <div class="cast-role">Arthur</div>
+                        </div>
+                        <div class="cast-member">
+                            <img src="https://via.placeholder.com/120x150/ff006e/ffffff?text=Michael" alt="Michael Caine" class="cast-photo">
+                            <div class="cast-name">Michael Caine</div>
+                            <div class="cast-role">Professor Miles</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="reviews">
+                    <h2 class="section-title">Recensies</h2>
+                    <div class="review-card">
+                        <div class="review-header">
+                            <span class="reviewer-name">Alex Johnson</span>
+                            <span class="review-rating">⭐⭐⭐⭐⭐</span>
+                        </div>
+                        <p class="review-text">
+                            Een meesterwerk van Christopher Nolan. De complexe verhaallijn, adembenemende visuele effecten 
+                            en Hans Zimmer's iconische soundtrack maken dit een onvergetelijke ervaring.
+                        </p>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-header">
+                            <span class="reviewer-name">Sophie Martinez</span>
+                            <span class="review-rating">⭐⭐⭐⭐</span>
+                        </div>
+                        <p class="review-text">
+                            Inception is een intelligente thriller die je blijft verbazen bij elke keer kijken. 
+                            De lagen van realiteit zijn briljant uitgewerkt.
+                        </p>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-header">
+                            <span class="reviewer-name">David Chen</span>
+                            <span class="review-rating">⭐⭐⭐⭐⭐</span>
+                        </div>
+                        <p class="review-text">
+                            DiCaprio's beste prestatie tot nu toe. De chemie tussen de cast is perfect en 
+                            het einde laat je met vragen achter op de beste manier mogelijk.
+                        </p>
+                    </div>
+                </section>
+            </div>
+
+            <aside class="sidebar">
+                <div class="info-box">
+                    <h3 class="section-title">Film Informatie</h3>
+                    <div class="info-item">
+                        <span class="info-label">Regisseur</span>
+                        <span class="info-value">Christopher Nolan</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Schrijver</span>
+                        <span class="info-value">Christopher Nolan</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Studio</span>
+                        <span class="info-value">Warner Bros.</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Budget</span>
+                        <span class="info-value">$160 miljoen</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Box Office</span>
+                        <span class="info-value">$836.8 miljoen</span>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h3 class="section-title">Talen & Ondertitels</h3>
+                    <div class="info-item">
+                        <span class="info-label">Audio</span>
+                        <span class="info-value">Engels, Nederlands</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Ondertitels</span>
+                        <span class="info-value">NL, EN, FR, DE</span>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <h3 class="section-title">Awards</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.6;">
+                        🏆 4 Academy Awards<br>
+                        🏆 3 BAFTA Awards<br>
+                        🏆 2 Golden Globes
+                    </p>
+                </div>
+            </aside>
+        </div>
+
+        <section class="related-films">
+            <h2 class="section-title">Gerelateerde Films</h2>
+            <div class="film-scroll">
+                <article class="related-film-card" onclick="goToFilm('interstellar')">
+                    <img src="https://via.placeholder.com/200x280/764ba2/ffffff?text=Interstellar" alt="Interstellar">
+                    <div class="related-film-info">
+                        <h4>Interstellar</h4>
+                        <p style="color: var(--text-secondary);">2014</p>
+                    </div>
+                </article>
+                <article class="related-film-card" onclick="goToFilm('tenet')">
+                    <img src="https://via.placeholder.com/200x280/00b4d8/ffffff?text=Tenet" alt="Tenet">
+                    <div class="related-film-info">
+                        <h4>Tenet</h4>
+                        <p style="color: var(--text-secondary);">2020</p>
+                    </div>
+                </article>
+                <article class="related-film-card" onclick="goToFilm('the-prestige')">
+                    <img src="https://via.placeholder.com/200x280/48cae4/ffffff?text=The+Prestige" alt="The Prestige">
+                    <div class="related-film-info">
+                        <h4>The Prestige</h4>
+                        <p style="color: var(--text-secondary);">2006</p>
+                    </div>
+                </article>
+                <article class="related-film-card" onclick="goToFilm('memento')">
+                    <img src="https://via.placeholder.com/200x280/90e0ef/ffffff?text=Memento" alt="Memento">
+                    <div class="related-film-info">
+                        <h4>Memento</h4>
+                        <p style="color: var(--text-secondary);">2000</p>
+                    </div>
+                </article>
+                <article class="related-film-card" onclick="goToFilm('shutter-island')">
+                    <img src="https://via.placeholder.com/200x280/caf0f8/ffffff?text=Shutter+Island" alt="Shutter Island">
+                    <div class="related-film-info">
+                        <h4>Shutter Island</h4>
+                        <p style="color: var(--text-secondary);">2010</p>
+                    </div>
+                </article>
+                <article class="related-film-card" onclick="goToFilm('the-matrix')">
+                    <img src="https://via.placeholder.com/200x280/38a169/ffffff?text=The+Matrix" alt="The Matrix">
+                    <div class="related-film-info">
+                        <h4>The Matrix</h4>
+                        <p style="color: var(--text-secondary);">1999</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>NextFlix</h3>
+                <ul>
+                    <li><a href="#">Over Ons</a></li>
+                    <li><a href="#">Pers</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Ondersteuning</h3>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Account</a></li>
+                    <li><a href="#">Veelgestelde Vragen</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Juridisch</h3>
+                <ul>
+                    <li><a href="#">Privacybeleid</a></li>
+                    <li><a href="#">Gebruiksvoorwaarden</a></li>
+                    <li><a href="#">Cookie Voorkeuren</a></li>
+                    <li><a href="#">Bedrijfsinformatie</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Volg Ons</h3>
+                <ul>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 NextFlix. Alle rechten voorbehouden.</p>
+        </div>
+    </footer>
+
+    <script>
+        function goToFilm(filmId) {
+            window.location.href = `film-detail.html?id=${filmId}`;
+        }
+    </script>
+</body>
+</html>
