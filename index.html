@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NextFlix - Jouw Filmplatform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #e50914;
+            --dark-bg: #141414;
+            --dark-secondary: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #b3b3b3;
+            --hover-bg: #2a2a2a;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 100%);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+
+        /* Film Grid */
+        .film-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .film-card {
+            background: var(--dark-secondary);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .film-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(229, 9, 20, 0.3);
+        }
+
+        .film-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .film-info {
+            padding: 1rem;
+        }
+
+        .film-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .film-year {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .film-rating {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--primary-color);
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        /* Categories */
+        .categories {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 0.5rem 1.5rem;
+            background: var(--hover-bg);
+            border: 2px solid transparent;
+            border-radius: 25px;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            border-color: var(--primary-color);
+            background: var(--primary-color);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-secondary);
+            padding: 3rem 2rem 1rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            line-height: 2;
+        }
+
+        .footer-section a:hover {
+            color: var(--text-primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #333;
+            color: var(--text-secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .film-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">NEXTFLIX</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#films">Films</a></li>
+                <li><a href="#series">Series</a></li>
+                <li><a href="#nieuw">Nieuw</a></li>
+                <li><a href="#mijnlijst">Mijn Lijst</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Welkom bij NextFlix</h1>
+        <p>Ontdek de beste films en series. Stream waar en wanneer je wilt.</p>
+    </section>
+
+    <main>
+        <section id="films">
+            <h2 class="section-title">Populaire Films</h2>
+            
+            <div class="categories">
+                <button class="category-btn active" onclick="filterFilms('all')">Alle</button>
+                <button class="category-btn" onclick="filterFilms('action')">Actie</button>
+                <button class="category-btn" onclick="filterFilms('drama')">Drama</button>
+                <button class="category-btn" onclick="filterFilms('comedy')">Komedie</button>
+                <button class="category-btn" onclick="filterFilms('thriller')">Thriller</button>
+                <button class="category-btn" onclick="filterFilms('scifi')">Sci-Fi</button>
+            </div>
+
+            <div class="film-grid">
+                <article class="film-card" onclick="goToFilmDetail('inception')">
+                    <span class="film-rating">8.8</span>
+                    <img src="https://via.placeholder.com/200x300/667eea/ffffff?text=Inception" alt="Inception">
+                    <div class="film-info">
+                        <h3 class="film-title">Inception</h3>
+                        <p class="film-year">2010</p>
+                    </div>
+                </article>
+
+                <article class="film-card" onclick="goToFilmDetail('interstellar')">
+                    <span class="film-rating">8.6</span>
+                    <img src="https://via.placeholder.com/200x300/764ba2/ffffff?text=Interstellar" alt="Interstellar">
+                    <div class="film-info">
+                        <h3 class="film-title">Interstellar</h3>
+                        <p class="film-year">2014</p>
+                    </div>
+                </article>
+
+                <article class="film-card" onclick="goToFilmDetail('the-dark-knight')">
+                    <span class="film-rating">9.0</span>
+                    <img src="https://via.placeholder.com/200x300/2d3748/ffffff?text=The+Dark+Knight" alt="The Dark Knight">
+                    <div class="film-info">
+                        <h3 class="film-title">The Dark Knight</h3>
+                        <p class="film-year">2008</p>
+                    </div>
+                </article>
+
+                <article class="film-card" onclick="goToFilmDetail('parasite')">
+                    <span class="film-rating">8.5</span>
+                    <img src="https://via.placeholder.com/200x300/38a169/ffffff?text=Parasite" alt="Parasite">
+                    <div class="film-info">
+                        <h3 class="film-title">Parasite</h3>
+                        <p class="film-year">2019</p>
+                    </div>
+                </article>
+
+                <article class="film-card" onclick="goToFilmDetail('dune')">
+                    <span class="film-rating">8.0</span>
+                    <img src="https://via.placeholder.com/200x300/f4845f/ffffff?text=Dune" alt="Dune">
+                    <div class="film-info">
+                        <h3 class="film-title">Dune</h3>
+                        <p class="film-year">2021</p>
+                    </div>
+                </article>
+
+                <article class="film-card" onclick="goToFilmDetail('oppenheimer')">
+                    <span class="film-rating">8.4</span>
+                    <img src="https://via.placeholder.com/200x300/e76f51/ffffff?text=Oppenheimer" alt="Oppenheimer">
+                    <div class="film-info">
+                        <h3 class="film-title">Oppenheimer</h3>
+                        <p class="film-year">2023</p>
+                    </div>
+                </article>
+
+                <article class="film-card" onclick="goToFilmDetail('barbie')">
+                    <span class="film-rating">7.1</span>
+                    <img src="https://via.placeholder.com/200x300/ff006e/ffffff?text=Barbie" alt="Barbie">
+                    <div class="film-info">
+                        <h3 class="film-title">Barbie</h3>
+                        <p class="film-year">2023</p>
+                    </div>
+                </article>
+
+                <article class="film-card" onclick="goToFilmDetail('avatar-2')">
+                    <span class="film-rating">7.6</span>
+                    <img src="https://via.placeholder.com/200x300/0077b6/ffffff?text=Avatar+2" alt="Avatar 2">
+                    <div class="film-info">
+                        <h3 class="film-title">Avatar: The Way of Water</h3>
+                        <p class="film-year">2022</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section id="nieuw">
+            <h2 class="section-title">Nieuw op NextFlix</h2>
+            <div class="film-grid">
+                <article class="film-card" onclick="goToFilmDetail('new1')">
+                    <span class="film-rating">7.8</span>
+                    <img src="https://via.placeholder.com/200x300/00b4d8/ffffff?text=The+Creator" alt="The Creator">
+                    <div class="film-info">
+                        <h3 class="film-title">The Creator</h3>
+                        <p class="film-year">2023</p>
+                    </div>
+                </article>
+
+                <article class="film-card" onclick="goToFilmDetail('new2')">
+                    <span class="film-rating">7.5</span>
+                    <img src="https://via.placeholder.com/200x300/48cae4/ffffff?text=Killers+of+the+Flower+Moon" alt="Killers of the Flower Moon">
+                    <div class="film-info">
+                        <h3 class="film-title">Killers of the Flower Moon</h3>
+                        <p class="film-year">2023</p>
+                    </div>
+                </article>
+
+                <article class="film-card" onclick="goToFilmDetail('new3')">
+                    <span class="film-rating">8.1</span>
+                    <img src="https://via.placeholder.com/200x300/90e0ef/ffffff?text=Napoleon" alt="Napoleon">
+                    <div class="film-info">
+                        <h3 class="film-title">Napoleon</h3>
+                        <p class="film-year">2023</p>
+                    </div>
+                </article>
+
+                <article class="film-card" onclick="goToFilmDetail('new4')">
+                    <span class="film-rating">7.3</span>
+                    <img src="https://via.placeholder.com/200x300/caf0f8/ffffff?text=Aquaman+2" alt="Aquaman 2">
+                    <div class="film-info">
+                        <h3 class="film-title">Aquaman and the Lost Kingdom</h3>
+                        <p class="film-year">2023</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>NextFlix</h3>
+                <ul>
+                    <li><a href="#">Over Ons</a></li>
+                    <li><a href="#">Pers</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Ondersteuning</h3>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Account</a></li>
+                    <li><a href="#">Veelgestelde Vragen</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Juridisch</h3>
+                <ul>
+                    <li><a href="#">Privacybeleid</a></li>
+                    <li><a href="#">Gebruiksvoorwaarden</a></li>
+                    <li><a href="#">Cookie Voorkeuren</a></li>
+                    <li><a href="#">Bedrijfsinformatie</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Volg ons</h3>
+                <ul>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 NextFlix. Alle rechten voorbehouden.</p>
+        </div>
+    </footer>
+
+    <script>
+        function filterFilms(category) {
+            // Update active button
+            const buttons = document.querySelectorAll('.category-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // In een echte applicatie zou hier de filtering logica komen
+            console.log('Filter films by:', category);
+        }
+
+        function goToFilmDetail(filmId) {
+            // Navigeer naar de detail pagina
+            window.location.href = `film-detail.html?id=${filmId}`;
+        }
+    </script>
+</body>
+</html>
